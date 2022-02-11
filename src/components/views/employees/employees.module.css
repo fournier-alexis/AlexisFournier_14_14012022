@@ -1,0 +1,94 @@
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.table {
+  position: relative;
+  border: 1px solid lightgray;
+  border-radius:  5px;
+  border-collapse: collapse; 
+  margin: 5em 2em 6em 2em;
+}
+
+.tr {
+  border-bottom: 1px solid lightgray;
+}
+
+.th {
+  font-weight: 700;
+  background-color: white;
+  height: 3.5em;
+  padding: 0 1em;
+}
+
+.td {
+  background-color: white;
+  height: 3.25em;
+  padding: 0 1em;
+  text-align: center;
+}
+
+.search {
+  position: absolute;
+  right: 0;
+  top: -4em;
+}
+
+.pagination {
+  position: absolute;
+  right: 0;
+
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5em;
+
+  padding: 1em;
+}
+
+.pageSize {
+  display: flex;
+  align-items: center;
+}
+
+.pageSize label {
+  margin: 0 0.5em;
+}
+
+.pageSize select {
+  height: 2em;
+  border-radius: 5px;
+  border-color: lightgray;
+  padding: 0 0.5em;
+  outline: none;
+}
+
+.infos {
+  display: flex;
+  align-items: center;
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+.navigation button {
+  border: none;
+  background-color: transparent;
+  font-size: 1rem;
+}
+
+.navigation button:not(:disabled):hover {
+  cursor: pointer;
+  color: #6200ee;
+}
+
+.back {
+  margin-bottom: 2em;
+}

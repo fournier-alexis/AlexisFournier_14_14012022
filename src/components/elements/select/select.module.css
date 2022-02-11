@@ -1,0 +1,39 @@
+.select {
+  position: relative;
+}
+
+.select label, .select select {
+  margin: 0;
+  padding: 12px 26px;
+  font-size: 18px;
+}
+
+.select select {
+  display: flex;
+  width: 329px;
+  background-color: transparent;
+  border: 0;
+  color: #0e1111;
+  outline: none ;
+  transition: all 50ms ease;
+  border-bottom: 1px solid gray;
+}
+
+.select label {
+  position: absolute;
+  top: 0;
+  transition: all 50ms ease;
+}
+
+.select select:focus + label, .filled select + label {
+  font-size: 12px;
+  top: -2px;
+  left: 16px;
+  padding: 0 15px;
+  background-color: white;
+  color: #6200ee;
+}
+
+.filled select:not(:focus) + label {
+  color: gray;
+}

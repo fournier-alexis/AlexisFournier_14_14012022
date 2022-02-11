@@ -1,0 +1,44 @@
+.input {
+  position: relative;
+}
+
+.input label, .input input {
+  margin: 0;
+  padding: 12px 26px;
+  font-size: 18px;
+}
+
+.input input {
+  display: flex;
+  width: 275px;
+  background-color: transparent;
+  border-radius: 5px;
+  border: 1px solid gray;
+  color: #0e1111;
+  outline: none ;
+  transition: all 50ms ease;
+}
+
+.input label {
+  position: absolute;
+  top: 0;
+  transition: all 50ms ease;
+}
+
+.input input:focus + label, .input input:not(:placeholder-shown) + label {
+  font-size: 12px;
+  top: -8px;
+  left: 12px;
+  padding: 0 15px;
+  background-color: white;
+  color: #6200ee;
+}
+
+.input input:not(:focus) + label {
+  color: gray;
+}
+
+.input input:focus {
+  border-color: #6200ee;
+  border-width: 2px;
+}

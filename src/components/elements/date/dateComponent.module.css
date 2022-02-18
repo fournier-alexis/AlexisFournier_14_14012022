@@ -1,0 +1,64 @@
+.datepicker {
+  position: relative;
+}
+
+.datepicker label, .datepicker input {
+  margin: 0;
+  padding: 12px 26px;
+  font-size: 18px;
+}
+
+.datepicker input {
+  display: flex;
+  width: 275px;
+  background-color: transparent;
+  border-radius: 5px;
+  border: 1px solid gray;
+  color: #0e1111;
+  outline: none ;
+  transition: all 50ms ease;
+}
+
+.datepicker label {
+  position: absolute;
+  top: 0;
+  transition: all 50ms ease;
+}
+
+.datepicker label {
+  font-size: 12px;
+  top: -8px;
+  left: 12px;
+  padding: 0 15px;
+  background-color: white;
+  color: gray;
+}
+
+.datepicker input:focus {
+  border-color: #6200ee;
+  border-width: 2px;
+}
+
+.header {
+  margin: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav {
+  border: none;
+  font-size: 1.3rem;
+  color: gray;
+}
+
+.nav:hover {
+  cursor: pointer;
+  color: #6200ee
+}
+
+.select {
+  border-radius: 5px;
+  border: 1px solid gray;
+  color: #0e1111;
+  outline: none ;
+}

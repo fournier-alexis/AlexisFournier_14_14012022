@@ -7,102 +7,63 @@ import { states } from "../../../assets/datas/states";
 import styles from "./create-employee.module.css";
 import { Link } from "react-router-dom";
 import { Button } from "../../elements/button/button";
-import DatePicker from "react-datepicker";
 import { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
+import { DateComponent } from "../../elements/date/dateComponent";
+import { Modal } from "afournier-oc-modal"
 
 export const CreateEmployee: React.FunctionComponent = () => {
   const dispatch = useDispatch();
   const employees: Employee[] = useSelector(
     (state: any) => state.employees.employees
   );
-  const [startDate, setStartDate] = useState(new Date());
+
+  const [isSuccessModalOpen, toggleSuccessModal] = useState<boolean>(false);
+  const [isMissingFieldModalOpen, toggleMissingFieldModal] = useState<boolean>(false);
+
+  const [firstName, setFirstName] = useState<string | undefined>(undefined);
+  const [lastName, setLastName] = useState<string | undefined>(undefined);
+  const [dateOfBirth, setDateOfBirth] = useState<Date>(new Date());
+  const [startDate, setStartDate] = useState<Date>(new Date());
+  const [street, setStreet] = useState<string | undefined>(undefined);
+  const [city, setCity] = useState<string | undefined>(undefined);
+  const [state, setState] = useState<string | undefined>(undefined);
+  const [zipCode, setZipCode] = useState<number | undefined>(undefined);
+  const [department, setDepartment] = useState<string | undefined>(undefined);
+
   const saveEmployee = () => {
     const employeesList = [...employees];
 
-    employeesList.push({
-      firstName: "Clyde",
-      lastName: "Vanilla",
-      dateOfBirth: "1990-09-11",
-      startDate: "2022-01-14",
-      department: "Savoie",
-      street: "437 avenue de bassens",
-      city: "Paris",
-      state: "AL",
-      zipCode: 93000,
-    });
+    if(firstName && lastName && street && city && state && zipCode && department){
+      employeesList.push({
+        firstName,
+        lastName,
+        dateOfBirth: dateOfBirth.toDateString(),
+        startDate: startDate.toDateString(),
+        street,
+        city,
+        state,
+        zipCode,
+        department
+      });
+      toggleSuccessModal(true);
 
-    employeesList.push({
-      firstName: "Bruce",
-      lastName: "Willis",
-      dateOfBirth: "1955-03-19",
-      startDate: "2022-01-14",
-      department: "Idar",
-      street: "22 avenue de will",
-      city: "Idar-Oberstein",
-      state: "AL",
-      zipCode: 45100,
-    });
+      //Used to persist datas
+      localStorage.setItem("employees", JSON.stringify(employeesList));
 
-    employeesList.push({
-      firstName: "Daniel",
-      lastName: "Radcliffe",
-      dateOfBirth: "1989-07-23",
-      startDate: "2022-01-14",
-      department: "Londres",
-      street: "357 street",
-      city: "Londres",
-      state: "AL",
-      zipCode: 173000,
-    });
-
-    employeesList.push({
-      firstName: "Emma",
-      lastName: "Watson",
-      dateOfBirth: "1990-04-15",
-      startDate: "2022-01-14",
-      department: "Ile de france",
-      street: "67 rue des watt",
-      city: "Paris",
-      state: "AL",
-      zipCode: 93000,
-    });
-
-    employeesList.push({
-      firstName: "Rupert",
-      lastName: "Grint",
-      dateOfBirth: "1988-08-24",
-      startDate: "2022-01-14",
-      department: "Essex",
-      street: "018 avenue des grint",
-      city: "Harlow",
-      state: "AL",
-      zipCode: 918000,
-    });
-
-    employeesList.push({
-      firstName: "Alan",
-      lastName: "Rickman",
-      dateOfBirth: "1946-21-02",
-      startDate: "2022-01-14",
-      department: "Londres",
-      street: "718 rue de rick",
-      city: "Londres",
-      state: "AL",
-      zipCode: 173000,
-    });
-
-    dispatch(
-      setEmployees({
-        employees: employeesList,
-      })
-    );
-
-    console.log(employeesList);
-    //TODO : Open confirmation modal
+      dispatch(
+        setEmployees({
+          employees: employeesList,
+        })
+      );
+    }
+    else {
+      toggleMissingFieldModal(true);
+    }
   };
 
   return (
+    
     <main>
       <div className={styles.title}>
         <h1>HRnet</h1>
@@ -111,24 +72,22 @@ export const CreateEmployee: React.FunctionComponent = () => {
         <Link to="employee-list">View Current Employees</Link>
         <h2>Create Employee</h2>
         <form action="#" id="create-employee">
-          <Input id="first-name" type="text" label="First Name"></Input>
-          <Input id="last-name" type="text" label="Last Name"></Input>
-          <DatePicker
-            selected={startDate}
-            onChange={(date: any) => setStartDate(date)}
-          ></DatePicker>
-          <Input id="start-date" type="text" label="Start Date"></Input>
+          <Input id="first-name" type="text" label="First Name" onChange={(value:string)=>setFirstName(value)}></Input>
+          <Input id="last-name" type="text" label="Last Name" onChange={(value:string)=>setLastName(value)}></Input>
+          <DateComponent id="date-of-birth" label="Date of Birth" date={dateOfBirth} setDate={setDateOfBirth}></DateComponent>
+          <DateComponent id="start-date" label="Start Date" date={startDate} setDate={setStartDate}></DateComponent>
           <fieldset className={styles.address}>
             <legend>Address</legend>
 
-            <Input id="street" type="text" label="Street"></Input>
-            <Input id="city" type="text" label="City"></Input>
+            <Input id="street" type="text" label="Street" onChange={(value:string)=>setStreet(value)}></Input>
+            <Input id="city" type="text" label="City" onChange={(value:string)=>setCity(value)}></Input>
             <Select
               id="state"
               label="State"
               options={states.map((state) => state.name)}
+              onChange={(value:string)=>setState(value)}
             ></Select>
-            <Input id="zip-code" type="number" label="Zip Code"></Input>
+            <Input id="zip-code" type="number" label="Zip Code" onChange={(value:number)=>setZipCode(value)}></Input>
           </fieldset>
 
           <Select
@@ -142,11 +101,20 @@ export const CreateEmployee: React.FunctionComponent = () => {
               "Human Resources",
               "Legal",
             ]}
+            onChange={(value:string)=>setDepartment(value)}
           ></Select>
         </form>
 
         <Button label="save" onClick={() => saveEmployee()}></Button>
       </div>
+      
+      <Modal isOpen={isSuccessModalOpen} handleClose={() => toggleSuccessModal(false)}>
+        <h1>Employee created !</h1>
+      </Modal>
+
+      <Modal isOpen={isMissingFieldModalOpen} handleClose={() => toggleMissingFieldModal(false)} closeColor="red">
+        <h1 style={{color: "red"}}>Some fields are empty</h1>
+      </Modal>
     </main>
   );
 };

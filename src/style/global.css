@@ -2,3 +2,8 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   color: #0e1111;
 }
+
+.react-datepicker__day--outside-month {
+  color: #ccc !important;
+  pointer-events: none;
+}

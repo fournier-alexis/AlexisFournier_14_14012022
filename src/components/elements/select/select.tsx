@@ -5,17 +5,20 @@ type Props = {
   id: string;
   label: string;
   options: string[];
+  onChange?: any;
 };
 
 export const Select: React.FunctionComponent<Props> = ({
   id,
   label,
   options,
+  onChange
 }) => {
   const [option, setOption] = useState(undefined);
 
   const onselect = (e: any) => {
     setOption(e.target.value);
+    onChange(e.target.value);
   };
 
   return (
